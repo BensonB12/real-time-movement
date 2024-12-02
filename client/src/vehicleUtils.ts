@@ -1,3 +1,4 @@
+import { MOVEMENT_VELOCITY } from "./constants";
 import { MovementAction } from "./models/MovementAction";
 import { PlayerVehicle } from "./models/PlayerVehicle";
 
@@ -8,22 +9,36 @@ export const moveVehicle = (vehicle: PlayerVehicle): PlayerVehicle => {
     case MovementAction.MOVE_FORWARD:
       return {
         ...vehicle,
-        xPosition: vehicle.xPosition + Math.cos(angleInRadians) * 10,
-        yPosition: vehicle.yPosition + Math.sin(angleInRadians) * 10,
+        xPosition:
+          vehicle.xPosition +
+          Math.round(Math.cos(angleInRadians) * MOVEMENT_VELOCITY),
+        yPosition:
+          vehicle.yPosition +
+          Math.round(Math.sin(angleInRadians) * MOVEMENT_VELOCITY),
+        movementAction: MovementAction.DO_NOTHING,
       };
     case MovementAction.TURNING_LEFT:
       return {
         ...vehicle,
-        angleInDegrees: vehicle.angleInDegrees + 45,
-        movementAction: MovementAction.MOVE_FORWARD,
+        angleInDegrees: degreesWithinCircle(vehicle.angleInDegrees + 45),
+        movementAction: MovementAction.DO_NOTHING,
       };
     case MovementAction.TURNING_RIGHT:
       return {
         ...vehicle,
-        angleInDegrees: vehicle.angleInDegrees - 45,
-        movementAction: MovementAction.MOVE_FORWARD,
+        angleInDegrees: degreesWithinCircle(vehicle.angleInDegrees - 45),
+        movementAction: MovementAction.DO_NOTHING,
       };
+    case MovementAction.DO_NOTHING:
+      return vehicle;
     default:
       throw new Error("Invalid movement action");
   }
+};
+
+const degreesWithinCircle = (degree: number): number => {
+  while (degree < 0) {
+    degree += 360;
+  }
+  return degree % 360;
 };
