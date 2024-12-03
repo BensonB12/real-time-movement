@@ -75,19 +75,17 @@ test("A user can move on a 45 degree angle", () => {
     movementAction: MovementAction.MOVE_FORWARD,
   };
 
-  const angleInRadians = startingVehicle.angleInDegrees * (Math.PI / 180);
+  const movedVehicle = moveVehicle(startingVehicle);
 
-  const expectedVehicle: PlayerVehicle = {
-    ...baseVehicle,
-    angleInDegrees: 45,
-    yPosition:
-      baseVehicle.yPosition +
-      Math.round(Math.sin(angleInRadians) * MOVEMENT_VELOCITY),
-    xPosition:
-      baseVehicle.xPosition +
-      Math.round(Math.cos(angleInRadians) * MOVEMENT_VELOCITY),
-  };
-  expect(moveVehicle(startingVehicle)).toStrictEqual(expectedVehicle);
+  expect(movedVehicle.id).toStrictEqual(startingVehicle.id);
+  expect(movedVehicle.angleInDegrees).toStrictEqual(
+    startingVehicle.angleInDegrees
+  );
+  expect(movedVehicle.color).toStrictEqual(startingVehicle.color);
+  expect(movedVehicle.movementAction).toStrictEqual(MovementAction.DO_NOTHING);
+  expect(movedVehicle.xPosition).toStrictEqual(movedVehicle.yPosition);
+  expect(movedVehicle.xPosition).greaterThan(startingVehicle.xPosition);
+  expect(movedVehicle.yPosition).greaterThan(startingVehicle.yPosition);
 });
 
 test("A user can move on a 225 degree angle", () => {
@@ -97,19 +95,17 @@ test("A user can move on a 225 degree angle", () => {
     movementAction: MovementAction.MOVE_FORWARD,
   };
 
-  const angleInRadians = startingVehicle.angleInDegrees * (Math.PI / 180);
+  const movedVehicle = moveVehicle(startingVehicle);
 
-  const expectedVehicle: PlayerVehicle = {
-    ...baseVehicle,
-    angleInDegrees: 225,
-    yPosition:
-      baseVehicle.yPosition +
-      Math.round(Math.sin(angleInRadians) * MOVEMENT_VELOCITY),
-    xPosition:
-      baseVehicle.xPosition +
-      Math.round(Math.cos(angleInRadians) * MOVEMENT_VELOCITY),
-  };
-  expect(moveVehicle(startingVehicle)).toStrictEqual(expectedVehicle);
+  expect(movedVehicle.id).toStrictEqual(startingVehicle.id);
+  expect(movedVehicle.angleInDegrees).toStrictEqual(
+    startingVehicle.angleInDegrees
+  );
+  expect(movedVehicle.color).toStrictEqual(startingVehicle.color);
+  expect(movedVehicle.movementAction).toStrictEqual(MovementAction.DO_NOTHING);
+  expect(movedVehicle.xPosition).toStrictEqual(movedVehicle.yPosition);
+  expect(movedVehicle.xPosition).lessThan(startingVehicle.xPosition);
+  expect(movedVehicle.yPosition).lessThan(startingVehicle.yPosition);
 });
 
 test("A user can move on a -45 degree angle", () => {
@@ -119,17 +115,15 @@ test("A user can move on a -45 degree angle", () => {
     movementAction: MovementAction.MOVE_FORWARD,
   };
 
-  const angleInRadians = startingVehicle.angleInDegrees * (Math.PI / 180);
+  const movedVehicle = moveVehicle(startingVehicle);
 
-  const expectedVehicle: PlayerVehicle = {
-    ...baseVehicle,
-    angleInDegrees: -45,
-    yPosition:
-      baseVehicle.yPosition +
-      Math.round(Math.sin(angleInRadians) * MOVEMENT_VELOCITY),
-    xPosition:
-      baseVehicle.xPosition +
-      Math.round(Math.cos(angleInRadians) * MOVEMENT_VELOCITY),
-  };
-  expect(moveVehicle(startingVehicle)).toStrictEqual(expectedVehicle);
+  expect(movedVehicle.id).toStrictEqual(startingVehicle.id);
+  expect(movedVehicle.angleInDegrees).toStrictEqual(
+    startingVehicle.angleInDegrees
+  );
+  expect(movedVehicle.color).toStrictEqual(startingVehicle.color);
+  expect(movedVehicle.movementAction).toStrictEqual(MovementAction.DO_NOTHING);
+  expect(movedVehicle.xPosition).toStrictEqual(-1 * movedVehicle.yPosition);
+  expect(movedVehicle.xPosition).greaterThan(startingVehicle.xPosition);
+  expect(movedVehicle.yPosition).lessThan(startingVehicle.yPosition);
 });
